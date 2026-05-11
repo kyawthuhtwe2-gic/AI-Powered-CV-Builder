@@ -1,0 +1,38 @@
+server:
+  port: 8080
+  address: 0.0.0.0
+
+spring:
+  application:
+    name: ai_powered_cv_builder
+  datasource:
+    url: jdbc:mysql://db:3306/ai_powered_cv_builder_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 528084071254-c6vbsar27uacvpg6e7i3acdqra0mb9uc.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - email
+              - profile
+
+jwt:
+  secret: my_secret_key_my_secret_key_123456
+
+# Frontend base URL used after successful OAuth login (update for your environment)
+frontend:
+  base-url: "http://localhost:3000"

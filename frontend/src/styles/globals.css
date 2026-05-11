@@ -1,0 +1,52 @@
+/* Global responsive helpers */
+
+:root {
+	/* Base font-size scales between 14px and 16px depending on viewport */
+	font-size: clamp(14px, 1.6vw, 16px);
+}
+
+html, body {
+	-webkit-text-size-adjust: 100%;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+}
+
+/* Ensure images and media scale on small screens */
+img, svg, video {
+	max-width: 100%;
+	height: auto;
+	display: block;
+}
+
+/* Prevent layout from being hidden under sticky header on small screens */
+body {
+	padding-top: 4rem; /* roughly header height; safe default */
+}
+
+/* Responsive heading scales */
+h1 {
+	font-size: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+h2 {
+	font-size: clamp(1.25rem, 3.2vw, 2rem);
+}
+
+h3 {
+	font-size: clamp(1.1rem, 2.4vw, 1.5rem);
+}
+
+/* Make clickable controls slightly larger on small touch devices */
+button, a, input, select, textarea {
+	touch-action: manipulation;
+}
+
+/* Small utility: reduce large paddings on very small screens */
+@media (max-width: 420px) {
+	.px-6 { padding-left: 1rem; padding-right: 1rem; }
+	.pt-16 { padding-top: 3.5rem; }
+	.pb-24 { padding-bottom: 3.5rem; }
+}
+
+/* Keep modals and fixed UI above other content */
+.modal, .fixed, .sticky { z-index: 50; }

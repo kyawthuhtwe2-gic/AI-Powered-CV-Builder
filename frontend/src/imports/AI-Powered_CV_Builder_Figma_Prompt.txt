@@ -1,0 +1,218 @@
+## 📄 AI-Powered CV Builder - Figma Prompt (Premium SaaS UI)
+
+Design a modern, premium SaaS web application called **“AI-Powered CV Builder”**.
+The product allows users to create professional resumes using AI, dynamic forms, real-time preview, profile image upload, and **fully distinct CV templates with unique visual identities**.
+
+---
+
+# 🌐 GLOBAL HEADER (ALL AUTHENTICATED PAGES)
+
+* **Left Side**
+
+  * App Logo (icon / brand mark)
+  * Title: **AI-Powered CV Builder**
+
+* **Right Side**
+
+  * Theme Toggle (Light / Dark)
+  * User Account (Google Email Avatar + Dropdown)
+  * Logout Button (icon or text)
+
+---
+
+# 🔁 CORE USER FLOW
+
+1. User signs in via **Google OAuth**
+2. Redirect to Dashboard
+3. Click **“Create CV”**
+4. Go to Template Selection Page
+5. Select a CV Template (VISUALLY UNIQUE DESIGNS):
+
+   * Modern (Tech / clean UI style)
+   * Minimal (Ultra clean, lots of whitespace)
+   * Corporate (Formal, structured grid, navy tones)
+   * Creative (Bold typography, colorful accents, modern layout blocks)
+6. Proceed to CV Builder Form
+7. Fill CV data (auto-save enabled)
+8. Live preview updates in real-time based on selected template design
+9. Export or download as PDF
+
+---
+
+# 📱 PAGES & SCREENS
+
+---
+
+## 1. Landing Page
+
+**Hero Section**
+
+* Headline: *Build Professional CVs with AI in Minutes*
+* CTA: **Continue with Google**
+
+**Features Section**
+
+* AI-powered CV optimization
+* Real-time preview editor
+* Profile image upload
+* PDF export
+
+---
+
+## 2. OAuth Login Page (No Password)
+
+* Title: *Welcome to AI-Powered CV Builder*
+* Buttons:
+
+  * Continue with Google
+  * Continue with GitHub
+* No email/password fields
+* Loading state: *Signing you in...*
+
+---
+
+## 3. Template Selection Page (IMPORTANT VISUAL DIFFERENTIATION)
+
+* Title: *Choose Your CV Template*
+* Grid layout (2x2 cards)
+
+### 🎨 TEMPLATE REQUIREMENT (CRITICAL)
+
+Each template MUST look **completely different in design system**, not just layout:
+
+### 🟦 Modern Template
+
+* Clean tech UI style
+* Blue accent colors
+* Card-based sections
+* Subtle gradients
+* SaaS-style typography
+
+### ⚪ Minimal Template
+
+* Pure white background
+* No heavy borders
+* Thin typography
+* Maximum whitespace
+* Very simple section separators
+
+### 🟨 Corporate Template
+
+* Structured grid layout
+* Dark navy + gray tones
+* Strong section headers
+* Formal spacing system
+* Traditional resume style
+
+### 🎨 Creative Template
+
+* Bold typography
+* Color accents (gradient headers)
+* Asymmetrical layout blocks
+* Modern portfolio-style design
+* Visual highlights for skills/projects
+
+---
+
+* Each card shows **real CV preview mock (not placeholder UI)**
+* CTA: **Continue with Selected Template**
+* Back button enabled
+
+---
+
+## 4. CV Builder Page (CORE FEATURE)
+
+### 🧾 Left Panel – Form Editor
+
+* Personal Information
+* Profile Image Upload:
+
+  * Drag & drop
+  * Circular preview
+  * Replace / Remove
+* Experience (+ Add multiple)
+* Education (+ Add multiple)
+* Projects (+ Add multiple)
+* Skills (tag input system)
+
+---
+
+### 👁 Right Panel – Live Preview (TEMPLATE-DRIVEN)
+
+* A4 CV preview changes dynamically based on selected template
+* Each template has:
+
+  * Different typography system
+  * Different spacing rules
+  * Different color theme
+  * Different layout structure
+* Profile image placement varies by template style
+* Real-time rendering updates
+
+---
+
+## 5. AI ASSISTANT PANEL (FLOATING / SIDE DRAWER)
+
+* Improve CV content with AI
+* Rewrite experience descriptions
+* Suggest relevant skills
+* ATS optimization score
+* One-click enhancement button
+
+---
+
+## 6. DASHBOARD PAGE
+
+* Sidebar:
+
+  * My CVs
+  * Settings
+
+* Main Area:
+
+  * “Create New CV” button (primary CTA)
+  * CV Cards:
+
+    * Edit
+    * Delete
+    * Download PDF
+
+---
+
+# 🎨 DESIGN SYSTEM
+
+* UI Style: Premium SaaS (Canva / Notion inspired)
+* Primary Color: `#2563EB`
+* Font: **Inter**
+* Border Radius: 12px – 16px
+* Soft shadows
+* Grid-based layout system
+* Smooth transitions (200–300ms)
+* High-end modern spacing system
+
+---
+
+# ⚙️ UX / FUNCTIONAL REQUIREMENTS
+
+* OAuth only authentication (NO password login)
+* Template selection REQUIRED before form access
+* Each template = **completely different visual identity**
+* Live preview updates instantly
+* Drag & drop image upload
+* Auto-save every few seconds
+* Fully responsive (mobile/tablet/desktop)
+* Smooth page transitions
+* PDF export with template styling preserved
+* Back navigation in all steps
+
+---
+
+# 🎯 PRODUCT GOAL
+
+Build a premium SaaS CV builder like **Canva / Notion / Resume.io**, with:
+
+* AI writing assistant
+* Fully distinct CV template system (not just layout changes, but real design differences)
+* Real-time preview engine
+* Professional dashboard system
+* High-end UX with smooth interactions

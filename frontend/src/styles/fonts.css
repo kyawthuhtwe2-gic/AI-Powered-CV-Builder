@@ -1,0 +1,27 @@
+/* Font stack and responsive type helpers */
+
+:root {
+	--font-sans: Inter, ui-sans-serif, system-ui, -apple-system,
+		'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
+html {
+	font-family: var(--font-sans);
+	/* Default size for large screens; overridden by globals.css clamp */
+	font-size: 16px;
+}
+
+/* Utility class to scale text down on very small devices */
+.text-sm-mobile {
+	font-size: clamp(0.8rem, 3.2vw, 0.95rem);
+}
+
+/* Slightly larger base for headings on larger screens */
+@media (min-width: 1024px) {
+	html { font-size: 16px; }
+}
+
+/* Improve legibility on narrow phones */
+@media (max-width: 420px) {
+	html { font-size: 14px; }
+}
