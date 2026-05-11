@@ -161,7 +161,7 @@ function MinimalPreview() {
   return (
     <div className="w-[210mm] h-[297mm] bg-white p-12 shadow-lg">
       <div className="text-center mb-12">
-        <div className="w-32 h-8 bg-gray-900 mx-auto mb-3"></div>
+        <div className="w-20 h-20 bg-gray-900 rounded-full mx-auto mb-3"></div>
         <div className="w-48 h-3 bg-gray-300 mx-auto"></div>
       </div>
       <div className="border-t border-gray-200 pt-8 mb-8">
@@ -188,7 +188,7 @@ function CorporatePreview() {
     <div className="w-[210mm] h-[297mm] bg-white shadow-lg">
       <div className="bg-slate-800 p-6 text-white">
         <div className="flex items-start gap-4">
-          <div className="w-16 h-16 bg-slate-600 rounded-sm"></div>
+          <div className="w-20 h-20 bg-slate-600 rounded-sm"></div>
           <div className="flex-1">
             <div className="w-36 h-5 bg-slate-100 mb-2"></div>
             <div className="w-28 h-3 bg-slate-400"></div>
@@ -230,7 +230,7 @@ function CreativePreview() {
     <div className="w-[210mm] h-[297mm] bg-white shadow-lg">
       <div className="bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 p-8">
         <div className="flex items-center gap-6">
-          <div className="w-24 h-24 bg-white rounded-2xl rotate-3"></div>
+          <div className="w-20 h-20 bg-white rounded-2xl rotate-3"></div>
           <div>
             <div className="w-48 h-8 bg-white rounded-lg mb-2"></div>
             <div className="w-36 h-5 bg-white/80 rounded-lg"></div>

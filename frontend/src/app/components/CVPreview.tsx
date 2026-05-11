@@ -217,7 +217,7 @@ function MinimalTemplate({ cvData }: { cvData: CVData }) {
           <img
             src={cvData.personalInfo.profileImage}
             alt="Profile"
-            className="w-32 h-8 bg-gray-900 mx-auto mb-3"
+            className="w-20 h-20 bg-gray-900 rounded-full mx-auto mb-3 object-cover"
           />
         )}
         <h1 className="text-3xl font-thin text-gray-900 mb-4 tracking-tight">
@@ -293,7 +293,15 @@ function CorporateTemplate({ cvData }: { cvData: CVData }) {
     <div className="w-[210mm] h-[297mm] bg-white shadow-lg">
       <div className="bg-slate-800 p-6 text-white">
         <div className="flex items-start gap-4">
-          <div className="w-16 h-16 bg-slate-600 rounded-sm"></div>
+          {cvData.personalInfo.profileImage ? (
+            <img
+              src={cvData.personalInfo.profileImage}
+              alt="Profile"
+              className="w-20 h-20 rounded-sm object-cover"
+            />
+          ) : (
+            <div className="w-20 h-20 bg-slate-600 rounded-sm"></div>
+          )}
           <div className="flex-1">
             <div className="w-36 h-5 bg-slate-100 mb-2"></div>
             <div className="w-28 h-3 bg-slate-400"></div>
@@ -392,7 +400,7 @@ function CreativeTemplate({ cvData }: { cvData: CVData }) {
             <img
               src={cvData.personalInfo.profileImage}
               alt="Profile"
-              className="w-32 h-32 rounded-3xl object-cover border-4 border-white shadow-xl transform rotate-3"
+              className="w-20 h-20 rounded-3xl object-cover border-4 border-white shadow-xl transform rotate-3"
             />
           )}
           <div className="flex-1">
