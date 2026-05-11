@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class CVService {
@@ -29,20 +28,17 @@ public class CVService {
         return cvRepository.findAllByOwner_Email(ownerEmail);
     }
 
-    public Optional<CV> getById(String id) {
+    public Optional<CV> getById(Long id) {
         return cvRepository.findById(id);
     }
 
     public CV create(CV cv, String ownerEmail) {
-        if (cv.getId() == null || cv.getId().isBlank()) {
-            cv.setId(UUID.randomUUID().toString());
-        }
         User owner = userRepository.findByEmail(ownerEmail).orElse(null);
         cv.setOwner(owner);
         return cvRepository.save(cv);
     }
 
-    public CV update(String id, CV cv, String ownerEmail) {
+    public CV update(Long id, CV cv, String ownerEmail) {
         return cvRepository.findById(id).map(existing -> {
             if (existing.getOwner() == null || !ownerEmail.equals(existing.getOwner().getEmail())) {
                 throw new IllegalArgumentException("Not allowed");
@@ -64,7 +60,7 @@ public class CVService {
         });
     }
 
-    public void delete(String id, String ownerEmail) {
+    public void delete(Long id, String ownerEmail) {
         cvRepository.findById(id).ifPresent(existing -> {
             if (existing.getOwner() == null || !ownerEmail.equals(existing.getOwner().getEmail())) {
                 throw new IllegalArgumentException("Not allowed");

@@ -303,8 +303,12 @@ function CorporateTemplate({ cvData }: { cvData: CVData }) {
             <div className="w-20 h-20 bg-slate-600 rounded-sm"></div>
           )}
           <div className="flex-1">
-            <div className="w-36 h-5 bg-slate-100 mb-2"></div>
-            <div className="w-28 h-3 bg-slate-400"></div>
+            <div className="mb-2">{cvData.personalInfo.fullName}</div>
+            <div className="flex flex-wrap gap-4">
+              <span>{cvData.personalInfo.email}</span>
+              <span>{cvData.personalInfo.phone}</span>
+              <span>{cvData.personalInfo.location}</span>
+            </div>
           </div>
         </div>
       </div>

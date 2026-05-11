@@ -13,26 +13,36 @@ public class CV {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
 
     private String name;
 
     private String templateId;
 
     @Lob
-    private String personalInfo; // stored as JSON string
+    @Basic(fetch = FetchType.LAZY)
+    @Column(columnDefinition = "TEXT")
+    private String personalInfo;
 
     @Lob
-    private String experience; // stored as JSON string (array)
+    @Basic(fetch = FetchType.LAZY)
+    @Column(columnDefinition = "TEXT")
+    private String experience;
 
     @Lob
-    private String education; // stored as JSON string (array)
+    @Basic(fetch = FetchType.LAZY)
+    @Column(columnDefinition = "TEXT")
+    private String education;
 
     @Lob
-    private String projects; // stored as JSON string (array)
+    @Basic(fetch = FetchType.LAZY)
+    @Column(columnDefinition = "TEXT")
+    private String projects;
 
     @Lob
-    private String skills; // stored as JSON string (array)
+    @Basic(fetch = FetchType.LAZY)
+    @Column(columnDefinition = "TEXT")
+    private String skills;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")

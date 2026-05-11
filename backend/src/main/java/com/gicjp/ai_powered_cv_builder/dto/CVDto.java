@@ -9,7 +9,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CVDto {
-    private String id;
+    private Long id;
     private String name;
     private String templateId;
     private PersonalInfoDto personalInfo;

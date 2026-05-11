@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/cvs")
@@ -28,23 +29,24 @@ public class CVController {
     @GetMapping
     public List<CVDto> list() {
         String email = currentEmail();
-        return cvService.listByOwner(email).stream().map(this::toDto).toList();
+        return cvService.listByOwner(email).stream().map(this::toDto).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public CVDto get(@PathVariable String id) {
+    public CVDto get(@PathVariable Long id) {
         String email = currentEmail();
-        CV cv = cvService.getById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "CV not found"));
+        CV cv = cvService.getById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "CV not found"));
         if (cv.getOwner() == null || email == null || !email.equals(cv.getOwner().getEmail())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Forbidden");
         }
         return toDto(cv);
     }
 
-    
     @GetMapping("/share/{id}")
-    public CVDto getShared(@PathVariable String id) {
-        CV cv = cvService.getById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "CV not found"));
+    public CVDto getShared(@PathVariable Long id) {
+        CV cv = cvService.getById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "CV not found"));
         return toDto(cv);
     }
 
@@ -60,7 +62,7 @@ public class CVController {
     }
 
     @PutMapping("/{id}")
-    public CVDto update(@PathVariable String id, @RequestBody CVDto cvDto) {
+    public CVDto update(@PathVariable Long id, @RequestBody CVDto cvDto) {
         try {
             CV entity = toEntity(cvDto, id);
             CV updated = cvService.update(id, entity, currentEmail());
@@ -73,7 +75,7 @@ public class CVController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable String id) {
+    public void delete(@PathVariable Long id) {
         try {
             cvService.delete(id, currentEmail());
         } catch (IllegalArgumentException e) {
@@ -143,7 +145,7 @@ public class CVController {
         }
     }
 
-    private CV toEntity(CVDto dto, String id) throws JsonProcessingException {
+    private CV toEntity(CVDto dto, Long id) throws JsonProcessingException {
         CV cv = new CV();
         if (id != null)
             cv.setId(id);
