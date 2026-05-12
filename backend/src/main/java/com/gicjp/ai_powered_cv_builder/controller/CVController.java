@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.List;
 
@@ -35,17 +36,18 @@ public class CVController {
     @GetMapping("/{id}")
     public CVDto get(@PathVariable String id) {
         String email = currentEmail();
-        CV cv = cvService.getById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "CV not found"));
+        CV cv = cvService.getById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "CV not found"));
         if (cv.getOwner() == null || email == null || !email.equals(cv.getOwner().getEmail())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Forbidden");
         }
         return toDto(cv);
     }
 
-    
     @GetMapping("/share/{id}")
     public CVDto getShared(@PathVariable String id) {
-        CV cv = cvService.getById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "CV not found"));
+        CV cv = cvService.getById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "CV not found"));
         return toDto(cv);
     }
 
@@ -90,6 +92,10 @@ public class CVController {
 
         if (principal instanceof User user) {
             return user.getEmail();
+        }
+
+        if (principal instanceof OAuth2User oauth2User) {
+            return oauth2User.getAttribute("email");
         }
 
         return null;
