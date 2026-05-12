@@ -19,19 +19,19 @@ public class CV {
     private String templateId;
 
     @Lob
-    private String personalInfo; // stored as JSON string
+    private String personalInfo;
 
     @Lob
-    private String experience; // stored as JSON string (array)
+    private String experience;
 
     @Lob
-    private String education; // stored as JSON string (array)
+    private String education;
 
     @Lob
-    private String projects; // stored as JSON string (array)
+    private String projects;
 
     @Lob
-    private String skills; // stored as JSON string (array)
+    private String skills;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
