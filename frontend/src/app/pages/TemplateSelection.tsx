@@ -91,7 +91,7 @@ export default function TemplateSelection() {
                 </div>
               )}
 
-              <div className="bg-gray-100 dark:bg-gray-700 w-full overflow-hidden flex justify-center items-center p-4">
+              <div className="bg-gray-100 dark:bg-gray-700 w-full overflow-hidden flex justify-center items-center">
                 <div className="w-[210mm] max-w-full" style={{ aspectRatio: '210 / 297' }}>
                   <div className="w-full h-full">{template.preview}</div>
                 </div>
