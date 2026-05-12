@@ -1,7 +1,6 @@
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
 import {
-  FileText,
   Sun,
   Moon,
   LogOut,
