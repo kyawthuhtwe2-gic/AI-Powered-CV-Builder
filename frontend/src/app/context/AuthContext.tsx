@@ -36,7 +36,7 @@ export function AuthProvider({
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("cv_builder_user");
+    const storedUser = localStorage.getItem("user");
 
     if (storedUser) {
       setUser(JSON.parse(storedUser));
@@ -56,7 +56,7 @@ export function AuthProvider({
   };
 
   const refreshUser = () => {
-    const storedUser = localStorage.getItem("cv_builder_user");
+    const storedUser = localStorage.getItem("user");
     if (storedUser) {
       try {
         setUser(JSON.parse(storedUser));
@@ -68,8 +68,8 @@ export function AuthProvider({
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem("cv_builder_user");
-    localStorage.removeItem("auth_token");
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
     window.location.href = "/";
   };
 

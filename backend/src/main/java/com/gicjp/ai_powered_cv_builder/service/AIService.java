@@ -3,20 +3,12 @@ package com.gicjp.ai_powered_cv_builder.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gicjp.ai_powered_cv_builder.dto.CVDto;
 import com.gicjp.ai_powered_cv_builder.dto.PersonalInfoDto;
-
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class AIService {
@@ -27,6 +19,7 @@ public class AIService {
         private static final int MAX_FIELD_CHARS = 2000;
         private static final int MAX_LIST_ITEMS = 10;
 
+        @SuppressWarnings("unchecked")
         private Object reduceObject(Object obj) {
                 if (obj instanceof Map<?, ?> map) {
                         Map<String, Object> out = new HashMap<>();
@@ -141,14 +134,12 @@ public class AIService {
 
                         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(requestBody, headers);
 
-                        @SuppressWarnings("rawtypes")
                         ResponseEntity<Map> response = restTemplate.postForEntity(url, entity, Map.class);
 
                         if (!response.getStatusCode().is2xxSuccessful()) {
                                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "OpenAI API Error");
                         }
 
-                        @SuppressWarnings("unchecked")
                         Map<String, Object> body = response.getBody();
 
                         if (body == null) {
@@ -156,7 +147,6 @@ public class AIService {
                                                 "Empty OpenAI response");
                         }
 
-                        @SuppressWarnings("unchecked")
                         List<Map<String, Object>> choices = (List<Map<String, Object>>) body.get("choices");
 
                         if (choices == null || choices.isEmpty()) {
@@ -164,7 +154,6 @@ public class AIService {
                                                 "No AI choices returned");
                         }
 
-                        @SuppressWarnings("unchecked")
                         Map<String, Object> message = (Map<String, Object>) choices.get(0).get("message");
 
                         if (message == null || message.get("content") == null) {
@@ -211,7 +200,7 @@ public class AIService {
 
                         // Preserve ID
                         if (cvData.get("id") != null) {
-                                parsed.setId((Long) cvData.get("id"));
+                                parsed.setId(String.valueOf(cvData.get("id")));
                         }
 
                         // Preserve profile image

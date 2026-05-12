@@ -12,37 +12,26 @@ import lombok.*;
 public class CV {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     private String name;
 
     private String templateId;
 
     @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(columnDefinition = "TEXT")
-    private String personalInfo;
+    private String personalInfo; // stored as JSON string
 
     @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(columnDefinition = "TEXT")
-    private String experience;
+    private String experience; // stored as JSON string (array)
 
     @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(columnDefinition = "TEXT")
-    private String education;
+    private String education; // stored as JSON string (array)
 
     @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(columnDefinition = "TEXT")
-    private String projects;
+    private String projects; // stored as JSON string (array)
 
     @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(columnDefinition = "TEXT")
-    private String skills;
+    private String skills; // stored as JSON string (array)
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")

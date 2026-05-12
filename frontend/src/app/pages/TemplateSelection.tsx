@@ -91,9 +91,9 @@ export default function TemplateSelection() {
                 </div>
               )}
 
-              <div className="p-4 bg-gray-100 dark:bg-gray-700 h-80 overflow-hidden">
-                <div className="transform scale-75 origin-top-left">
-                  {template.preview}
+              <div className="bg-gray-100 dark:bg-gray-700 w-full overflow-hidden flex justify-center items-center p-4">
+                <div className="w-[210mm] max-w-full" style={{ aspectRatio: '210 / 297' }}>
+                  <div className="w-full h-full">{template.preview}</div>
                 </div>
               </div>
 
@@ -129,7 +129,7 @@ export default function TemplateSelection() {
 
 function ModernPreview() {
   return (
-    <div className="w-[210mm] h-[297mm] bg-white p-8 shadow-lg">
+    <div className="w-full h-full bg-white shadow-lg p-8">
       <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl p-6 text-white mb-6">
         <div className="flex items-center gap-4">
           <div className="w-20 h-20 bg-white/30 rounded-full"></div>
@@ -159,7 +159,7 @@ function ModernPreview() {
 
 function MinimalPreview() {
   return (
-    <div className="w-[210mm] h-[297mm] bg-white p-12 shadow-lg">
+    <div className="w-full h-full bg-white shadow-lg p-12">
       <div className="text-center mb-12">
         <div className="w-20 h-20 bg-gray-900 rounded-full mx-auto mb-3"></div>
         <div className="w-48 h-3 bg-gray-300 mx-auto"></div>
@@ -185,7 +185,7 @@ function MinimalPreview() {
 
 function CorporatePreview() {
   return (
-    <div className="w-[210mm] h-[297mm] bg-white shadow-lg">
+    <div className="w-full h-full bg-white shadow-lg">
       <div className="bg-slate-800 p-6 text-white">
         <div className="flex items-start gap-4">
           <div className="w-20 h-20 bg-slate-600 rounded-sm"></div>
@@ -227,13 +227,13 @@ function CorporatePreview() {
 
 function CreativePreview() {
   return (
-    <div className="w-[210mm] h-[297mm] bg-white shadow-lg">
-      <div className="bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 p-8">
+    <div className="w-full h-full bg-white shadow-lg">
+      <div className="bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 p-6">
         <div className="flex items-center gap-6">
           <div className="w-20 h-20 bg-white rounded-2xl rotate-3"></div>
           <div>
-            <div className="w-48 h-8 bg-white rounded-lg mb-2"></div>
-            <div className="w-36 h-5 bg-white/80 rounded-lg"></div>
+            <div className="w-36 h-5 bg-white rounded-lg mb-2"></div>
+            <div className="w-28 h-3 bg-white/80 rounded-lg"></div>
           </div>
         </div>
       </div>

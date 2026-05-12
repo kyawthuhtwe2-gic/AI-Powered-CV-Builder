@@ -4,14 +4,14 @@ type Json = Record<string, any>;
 
 function getTokenFromStorage() {
   return (
-    localStorage.getItem('auth_token') ||
+    localStorage.getItem('token') ||
     ''
   );
 }
 
 export function setAuthToken(token: string | null) {
-  if (token) localStorage.setItem('auth_token', token);
-  else localStorage.removeItem('auth_token');
+  if (token) localStorage.setItem('token', token);
+  else localStorage.removeItem('token');
 }
 
 async function request(path: string, opts: RequestInit = {}) {

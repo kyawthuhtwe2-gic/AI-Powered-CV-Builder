@@ -21,6 +21,7 @@ export default function AIAssistant({ cvData, onClose }: AIAssistantProps) {
   const progressRef = useRef<number | null>(null);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const [keyError, setKeyError] = useState("");
 
   useEffect(() => {
     // load saved AI configs from backend
@@ -44,7 +45,10 @@ export default function AIAssistant({ cvData, onClose }: AIAssistantProps) {
   }, []);
 
   useEffect(() => {
-    if (showKeyModal) inputRef.current?.focus();
+    if (showKeyModal) {
+      inputRef.current?.focus();
+      setKeyError("");
+    }
   }, [showKeyModal]);
 
   const maskedKey = apiKey ? "****************" : "Not set";
@@ -53,6 +57,14 @@ export default function AIAssistant({ cvData, onClose }: AIAssistantProps) {
   const closeKeyModal = () => setShowKeyModal(false);
 
   const handleSaveKeyAndInstruction = () => {
+    // validate API key length (max 180 chars)
+    if (apiKey && apiKey.length > 180) {
+      const msg = "OpenAI API key is too long (max 180 characters).";
+      setKeyError(msg);
+      toast.error(msg);
+      return;
+    }
+
     // save to backend (create or update)
     const save = async () => {
       try {
@@ -69,6 +81,7 @@ export default function AIAssistant({ cvData, onClose }: AIAssistantProps) {
         setSelectedConfigId(saved?.id ?? null);
         setApiKey(saved?.openAiKey || apiKey);
         setInstruction(saved?.instruction || instruction);
+        setKeyError("");
         toast.success("Saved API key and instruction");
         setShowKeyModal(false);
       } catch (e: any) {
@@ -236,10 +249,17 @@ export default function AIAssistant({ cvData, onClose }: AIAssistantProps) {
             <input
               ref={inputRef}
               value={apiKey}
-              onChange={(e) => setApiKey(e.target.value)}
-              placeholder="sk-..."
+              onChange={(e) => {
+                const v = e.target.value;
+                setApiKey(v);
+                if (v.length <= 180) setKeyError("");
+              }}
+              placeholder="****************"
               className="w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-sm mb-3 focus:outline-none focus:ring-2 focus:ring-[#93c5fd]"
             />
+            {keyError && (
+              <p className="text-sm text-red-600 mt-1">{keyError}</p>
+            )}
 
             <label className="text-sm text-gray-700 dark:text-gray-200">Instruction</label>
             <textarea

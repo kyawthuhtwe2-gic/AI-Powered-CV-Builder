@@ -4,15 +4,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gicjp.ai_powered_cv_builder.dto.CVDto;
 import com.gicjp.ai_powered_cv_builder.model.CV;
+import com.gicjp.ai_powered_cv_builder.model.User;
 import com.gicjp.ai_powered_cv_builder.service.CVService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/cvs")
@@ -29,24 +29,23 @@ public class CVController {
     @GetMapping
     public List<CVDto> list() {
         String email = currentEmail();
-        return cvService.listByOwner(email).stream().map(this::toDto).collect(Collectors.toList());
+        return cvService.listByOwner(email).stream().map(this::toDto).toList();
     }
 
     @GetMapping("/{id}")
-    public CVDto get(@PathVariable Long id) {
+    public CVDto get(@PathVariable String id) {
         String email = currentEmail();
-        CV cv = cvService.getById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "CV not found"));
+        CV cv = cvService.getById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "CV not found"));
         if (cv.getOwner() == null || email == null || !email.equals(cv.getOwner().getEmail())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Forbidden");
         }
         return toDto(cv);
     }
 
+    
     @GetMapping("/share/{id}")
-    public CVDto getShared(@PathVariable Long id) {
-        CV cv = cvService.getById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "CV not found"));
+    public CVDto getShared(@PathVariable String id) {
+        CV cv = cvService.getById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "CV not found"));
         return toDto(cv);
     }
 
@@ -62,7 +61,7 @@ public class CVController {
     }
 
     @PutMapping("/{id}")
-    public CVDto update(@PathVariable Long id, @RequestBody CVDto cvDto) {
+    public CVDto update(@PathVariable String id, @RequestBody CVDto cvDto) {
         try {
             CV entity = toEntity(cvDto, id);
             CV updated = cvService.update(id, entity, currentEmail());
@@ -75,7 +74,7 @@ public class CVController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable String id) {
         try {
             cvService.delete(id, currentEmail());
         } catch (IllegalArgumentException e) {
@@ -84,11 +83,16 @@ public class CVController {
     }
 
     private String currentEmail() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof com.gicjp.ai_powered_cv_builder.model.User) {
-            return ((com.gicjp.ai_powered_cv_builder.model.User) principal).getEmail();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Object principal = authentication.getPrincipal();
+
+        if (principal instanceof User user) {
+            return user.getEmail();
         }
-        return principal != null ? principal.toString() : null;
+
+        return null;
     }
 
     private CVDto toDto(CV cv) {
@@ -145,7 +149,7 @@ public class CVController {
         }
     }
 
-    private CV toEntity(CVDto dto, Long id) throws JsonProcessingException {
+    private CV toEntity(CVDto dto, String id) throws JsonProcessingException {
         CV cv = new CV();
         if (id != null)
             cv.setId(id);

@@ -13,7 +13,7 @@ export default function OAuthSuccess() {
 
     if (token) {
       // Persist token for use with backend APIs (store under multiple keys for compatibility)
-      localStorage.setItem("auth_token", token);
+      localStorage.setItem("token", token);
 
       // Try to fetch full user info from backend using the JWT
       const fetchUser = async () => {
@@ -27,8 +27,8 @@ export default function OAuthSuccess() {
               avatar: data.avatar ?? data.name ?? "",
             };
 
-            localStorage.setItem("cv_builder_user", JSON.stringify(user));
-            localStorage.setItem("auth_token", token);
+            localStorage.setItem("user", JSON.stringify(user));
+            localStorage.setItem("token", token);
             // Notify AuthContext to refresh in-memory user
             refreshUser();
           }

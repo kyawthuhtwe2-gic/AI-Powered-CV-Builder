@@ -1,9 +1,13 @@
 package com.gicjp.ai_powered_cv_builder.controller;
 
 import com.gicjp.ai_powered_cv_builder.model.AIConfig;
+import com.gicjp.ai_powered_cv_builder.model.User;
 import com.gicjp.ai_powered_cv_builder.service.AIConfigService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +19,7 @@ public class AIConfigController {
 
     private final AIConfigService aiConfigService;
 
+    @Autowired
     public AIConfigController(AIConfigService aiConfigService) {
         this.aiConfigService = aiConfigService;
     }
@@ -60,10 +65,15 @@ public class AIConfigController {
     }
 
     private String currentEmail() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof com.gicjp.ai_powered_cv_builder.model.User) {
-            return ((com.gicjp.ai_powered_cv_builder.model.User) principal).getEmail();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Object principal = authentication.getPrincipal();
+
+        if (principal instanceof User user) {
+            return user.getEmail();
         }
-        return principal != null ? principal.toString() : null;
+
+        return null;
     }
 }

@@ -116,6 +116,7 @@ function ModernTemplate({ cvData }: { cvData: CVData }) {
             <div className="text-sm text-white/90">
               <div>{cvData.personalInfo.email}</div>
               <div>{cvData.personalInfo.phone}</div>
+              <div>{cvData.personalInfo.location}</div>
             </div>
           </div>
         </div>
@@ -223,8 +224,10 @@ function MinimalTemplate({ cvData }: { cvData: CVData }) {
         <h1 className="text-3xl font-thin text-gray-900 mb-4 tracking-tight">
           {cvData.personalInfo.fullName || "Your Name"}
         </h1>
-        <div className="text-sm text-gray-500">
+        <div className="flex flex-wrap gap-4 text-white/90">
           <span>{cvData.personalInfo.email}</span>
+          <span>{cvData.personalInfo.phone}</span>
+          <span>{cvData.personalInfo.location}</span>
         </div>
       </div>
 
@@ -304,7 +307,7 @@ function CorporateTemplate({ cvData }: { cvData: CVData }) {
           )}
           <div className="flex-1">
             <div className="mb-2">{cvData.personalInfo.fullName}</div>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-4 text-white/90">
               <span>{cvData.personalInfo.email}</span>
               <span>{cvData.personalInfo.phone}</span>
               <span>{cvData.personalInfo.location}</span>
@@ -398,7 +401,7 @@ function CorporateTemplate({ cvData }: { cvData: CVData }) {
 function CreativeTemplate({ cvData }: { cvData: CVData }) {
   return (
     <div className="w-[210mm] h-[297mm] bg-white shadow-lg">
-      <div className="bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 p-8">
+      <div className="bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 p-6">
         <div className="flex items-center gap-8">
           {cvData.personalInfo.profileImage && (
             <img
