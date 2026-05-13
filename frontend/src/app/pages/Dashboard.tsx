@@ -6,8 +6,6 @@ import {
   Edit,
   Trash2,
   Download,
-  Check,
-  X,
   Eye,
   Share2,
   MoreVertical,
@@ -18,10 +16,11 @@ import PDFPreviewModal from "../components/PDFPreviewModal";
 import CVPreviewModal from "../components/CVPreviewModal";
 import ShareModal from "../components/ShareModal";
 import LoadingModal from "../components/LoadingModal";
+import PaginationControls from "../components/PaginationControls";
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const { cvs, deleteCV, saveCV, loading } = useCV();
+  const { cvs, deleteCV, saveCV, loading, page, totalPages, refreshCVs } = useCV();
 
   const [previewCV, setPreviewCV] = useState<CVData | null>(
     null,
@@ -97,34 +96,27 @@ export default function Dashboard() {
       <Header />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            My CVs
-          </h2>
+        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">
+              My CVs
+            </h2>
 
-          <p className="text-gray-600 dark:text-gray-300">
-            Manage your professional resumes
-          </p>
+            <p className="text-gray-600 dark:text-gray-300">
+              Manage your professional resumes
+            </p>
+          </div>
+          <button
+            onClick={() => navigate("/templates")}
+            className="group bg-white gap-2 p-2 dark:bg-gray-800 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-600 hover:border-[#2563EB] dark:hover:border-[#2563EB] transition-all flex items-center justify-center cursor-pointer"
+          >
+            <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
+            <span className="text-sm font-medium">Create New CV</span>
+          </button>
+
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <button
-            onClick={() => navigate("/templates")}
-            className="group bg-white dark:bg-gray-800 rounded-xl p-8 border-2 border-dashed border-gray-300 dark:border-gray-600 hover:border-[#2563EB] dark:hover:border-[#2563EB] transition-all flex flex-col items-center justify-center min-h-[300px] cursor-pointer"
-          >
-            <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-              <Plus className="w-8 h-8 text-[#2563EB]" />
-            </div>
-
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-              Create New CV
-            </h3>
-
-            <p className="text-gray-500 dark:text-gray-400 text-center">
-              Start building your professional resume
-            </p>
-          </button>
-
           {cvs.map((cv) => (
             <div
               key={cv.id}
@@ -133,78 +125,78 @@ export default function Dashboard() {
               <div className="p-6">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-2 group justify-between">
-                        <div className="block items-center gap-2">
-                            <h3 className="text-lg inline-flex items-center px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
-                              {getTemplateName(cv.templateId)} Resume
-                            </h3>
-                            
+                    <div className="flex items-center gap-2 mb-2 group justify-between">
+                      <div className="block items-center gap-2">
+                        <h3 className="text-lg inline-flex items-center px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
+                          {getTemplateName(cv.templateId)} Resume
+                        </h3>
+
+                      </div>
+
+                      <div className="flex justify-center relative items-center gap-2">
+                        <button
+                          onClick={() => handleEdit(cv)}
+                          className="p-2.5 text-[#2563EB] dark:text-[#60a5fa] hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
+                          title="Edit"
+                        >
+                          <Edit className="w-5 h-5" />
+                        </button>
+
+                        <button
+                          onClick={() => handleDownload(cv)}
+                          className="p-2.5 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg transition-colors"
+                          title="Download"
+                        >
+                          <Download className="w-5 h-5" />
+                        </button>
+
+                        <button
+                          onClick={() =>
+                            setOpenMenuId(
+                              openMenuId === cv.id ? null : cv.id,
+                            )
+                          }
+                          className="p-2.5 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                          title="More"
+                        >
+                          <MoreVertical className="w-5 h-5" />
+                        </button>
+
+                        {openMenuId === cv.id && (
+                          <div className="absolute top-12 right-0 w-44 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-xl z-20 overflow-hidden">
+                            <button
+                              onClick={() => {
+                                handleOpen(cv);
+                                setOpenMenuId(null);
+                              }}
+                              className="w-full flex items-center gap-3 px-4 py-3 text-sm text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors"
+                            >
+                              <Eye className="w-4 h-4" />
+                              View
+                            </button>
+
+                            <button
+                              onClick={() => handleShare(cv.id)}
+                              className="w-full flex items-center gap-3 px-4 py-3 text-sm text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors"
+                            >
+                              <Share2 className="w-4 h-4" />
+                              Share
+                            </button>
+
+                            <button
+                              onClick={() => {
+                                handleDelete(cv.id, cv.name);
+                                setOpenMenuId(null);
+                              }}
+                              className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                              Delete
+                            </button>
                           </div>
-                          
-                        <div className="flex justify-center relative items-center gap-2">
-                          <button
-                            onClick={() => handleEdit(cv)}
-                            className="p-2.5 text-[#2563EB] dark:text-[#60a5fa] hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
-                            title="Edit"
-                          >
-                            <Edit className="w-5 h-5" />
-                          </button>
-
-                          <button
-                            onClick={() => handleDownload(cv)}
-                            className="p-2.5 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg transition-colors"
-                            title="Download"
-                          >
-                            <Download className="w-5 h-5" />
-                          </button>
-
-                          <button
-                            onClick={() =>
-                              setOpenMenuId(
-                                openMenuId === cv.id ? null : cv.id,
-                              )
-                            }
-                            className="p-2.5 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
-                            title="More"
-                          >
-                            <MoreVertical className="w-5 h-5" />
-                          </button>
-
-                          {openMenuId === cv.id && (
-                            <div className="absolute top-12 right-0 w-44 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-xl z-20 overflow-hidden">
-                              <button
-                                onClick={() => {
-                                  handleOpen(cv);
-                                  setOpenMenuId(null);
-                                }}
-                                className="w-full flex items-center gap-3 px-4 py-3 text-sm text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors"
-                              >
-                                <Eye className="w-4 h-4" />
-                                View
-                              </button>
-
-                              <button
-                                onClick={() => handleShare(cv.id)}
-                                className="w-full flex items-center gap-3 px-4 py-3 text-sm text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors"
-                              >
-                                <Share2 className="w-4 h-4" />
-                                Share
-                              </button>
-                              
-                              <button
-                                onClick={() => {
-                                  handleDelete(cv.id, cv.name);
-                                  setOpenMenuId(null);
-                                }}
-                                className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
-                              >
-                                <Trash2 className="w-4 h-4" />
-                                Delete
-                              </button>
-                            </div>
-                          )}
-                        </div>
-                      </div>                    
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -226,19 +218,33 @@ export default function Dashboard() {
                       {cv.personalInfo.fullName}
                     </p>
                   </div>
-                  
+
                 )}
                 <div className="flex justify-center">
-                    <span className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-                              Last updated: {new Date(cv.updatedAt).toLocaleDateString()}
-                            </span>
-                            </div>
-                
+                  <span className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                    Last updated: {new Date(cv.updatedAt).toLocaleDateString()}
+                  </span>
+                </div>
+
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      {cvs.length === 0 ? (
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+          <p className="text-gray-500 dark:text-gray-400">
+            No CVs found. Create your first CV to get started.
+          </p>
+        </div>
+      ) : (
+        <PaginationControls
+          page={page}
+          totalPages={totalPages}
+          onPageChange={(p) => refreshCVs(p)}
+        />
+      )}
 
       {previewCV && (
         <PDFPreviewModal
@@ -251,7 +257,7 @@ export default function Dashboard() {
         <CVPreviewModal
           cvData={viewCV}
           onClose={() => setViewCV(null)}
-        />  
+        />
       )}
 
       {deleteConfirm && (

@@ -45,8 +45,12 @@ export async function getMe() {
   return request('api/me', { method: 'GET' });
 }
 
-export async function getCVs() {
-  return request('api/cvs', { method: 'GET' });
+export async function getCVs(page?: number, size?: number) {
+  const qs: string[] = [];
+  if (typeof page === 'number') qs.push(`page=${page}`);
+  if (typeof size === 'number') qs.push(`size=${size}`);
+  const path = qs.length ? `api/cvs?${qs.join('&')}` : 'api/cvs';
+  return request(path, { method: 'GET' });
 }
 
 export async function getCV(id: string) {

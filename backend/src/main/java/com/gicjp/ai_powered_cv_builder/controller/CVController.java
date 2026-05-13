@@ -14,6 +14,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.GetMapping;
+import com.gicjp.ai_powered_cv_builder.dto.PagedResponse;
 
 @RestController
 @RequestMapping("api/cvs")
@@ -26,14 +30,23 @@ public class CVController {
         this.cvService = cvService;
         this.mapper = mapper;
     }
-
+    
     @GetMapping
-    public List<CVDto> list() {
+    public PagedResponse<CVDto> list(Pageable pageable) {
         String email = currentEmail();
-        return cvService.listByOwner(email).stream().map(this::toDto).toList();
+
+        Page<CVDto> page = cvService.listByOwner(email, pageable).map(this::toDto);
+
+        return new PagedResponse<>(
+                page.getContent(),
+                page.getNumber(),
+                page.getSize(),
+                page.getTotalElements(),
+                page.getTotalPages(),
+                page.isLast()
+        );
     }
 
-    @GetMapping("/{id}")
     public CVDto get(@PathVariable String id) {
         String email = currentEmail();
         CV cv = cvService.getById(id)

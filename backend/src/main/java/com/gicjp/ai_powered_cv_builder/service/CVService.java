@@ -7,8 +7,10 @@ import com.gicjp.ai_powered_cv_builder.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import org.springframework.data.domain.Page;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.data.domain.Pageable;
 
 @Service
 public class CVService {
@@ -25,8 +27,8 @@ public class CVService {
         return cvRepository.findAll();
     }
 
-    public List<CV> listByOwner(String ownerEmail) {
-        return cvRepository.findAllByOwner_Email(ownerEmail);
+    public Page<CV> listByOwner(String ownerEmail, Pageable pageable) {
+        return cvRepository.findAllByOwner_Email(ownerEmail, pageable);
     }
 
     public Optional<CV> getById(String id) {
