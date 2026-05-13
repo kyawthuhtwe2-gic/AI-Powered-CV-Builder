@@ -233,7 +233,7 @@ export default function Dashboard() {
       </div>
 
       {cvs.length === 0 ? (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+        <div className="bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
           <p className="text-gray-500 dark:text-gray-400">
             No CVs found. Create your first CV to get started.
           </p>
