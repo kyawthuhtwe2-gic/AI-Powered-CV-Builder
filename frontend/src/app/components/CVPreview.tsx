@@ -40,7 +40,6 @@ const CVPreview = forwardRef<HTMLDivElement, CVPreviewProps>(
 
     // For live preview, include wrapper that scales the fixed-size template to fit the container
     const BASE_WIDTH = 794; // approx px for 210mm at 96dpi
-    const BASE_HEIGHT = 1123; // approx px for 297mm at 96dpi
 
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [scale, setScale] = useState<number>(1);
@@ -78,12 +77,12 @@ const CVPreview = forwardRef<HTMLDivElement, CVPreviewProps>(
             style={{
               colorScheme: "light",
               width: BASE_WIDTH,
-              height: BASE_HEIGHT,
               transform: `scale(${scale})`,
               transformOrigin: 'top center',
               margin: '0 auto',
               borderRadius: '20px'
             }}
+            className="h-full"
           >
             <TemplateComponent cvData={cvData} />
           </div>
@@ -99,7 +98,7 @@ export default CVPreview;
 
 function ModernTemplate({ cvData }: { cvData: CVData }) {
   return (
-    <div className="w-[210mm] h-[297mm] bg-white p-8 shadow-lg">
+    <div className="w-full h-full bg-white p-8 shadow-lg">
       <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl p-6 text-white mb-6">
         <div className="flex items-center gap-4">
           {cvData.personalInfo.profileImage && (
@@ -222,7 +221,7 @@ function ModernTemplate({ cvData }: { cvData: CVData }) {
 
 function MinimalTemplate({ cvData }: { cvData: CVData }) {
   return (
-    <div className="w-[210mm] h-[297mm] bg-white p-12 shadow-lg">
+    <div className="w-full h-full bg-white p-12 shadow-lg">
       <div className="text-center mb-12">
         {cvData.personalInfo.profileImage && (
           <img
@@ -304,7 +303,7 @@ function MinimalTemplate({ cvData }: { cvData: CVData }) {
 
 function CorporateTemplate({ cvData }: { cvData: CVData }) {
   return (
-    <div className="w-[210mm] h-[297mm] bg-white shadow-lg">
+    <div className="w-full h-full bg-white shadow-lg">
       <div className="bg-slate-800 p-6 text-white">
         <div className="flex items-start gap-4">
           {cvData.personalInfo.profileImage ? (
@@ -411,7 +410,7 @@ function CorporateTemplate({ cvData }: { cvData: CVData }) {
 
 function CreativeTemplate({ cvData }: { cvData: CVData }) {
   return (
-    <div className="w-[210mm] h-[297mm] bg-white shadow-lg">
+    <div className="w-full h-full bg-white shadow-lg">
       <div className="bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 p-6">
         <div className="flex items-center gap-8">
           {cvData.personalInfo.profileImage && (
