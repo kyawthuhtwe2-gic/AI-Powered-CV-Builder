@@ -124,7 +124,9 @@ function ModernTemplate({ cvData }: { cvData: CVData }) {
 
       {cvData.personalInfo.summary && (
         <div className="bg-blue-50 rounded-lg p-4 mb-4">
-          <div className="w-24 h-5 bg-blue-600 rounded mb-3"></div>
+          <h2 className="text-2xl font-bold text-orange-800 mb-4">
+            Summary
+          </h2>
           <div className="space-y-2">
             <p className="text-gray-700 leading-relaxed">
               {cvData.personalInfo.summary}
@@ -135,7 +137,9 @@ function ModernTemplate({ cvData }: { cvData: CVData }) {
 
       {cvData.experience.length > 0 && (
         <div className="bg-blue-50 rounded-lg p-4 mb-4">
-          <div className="w-24 h-5 bg-blue-600 rounded mb-3"></div>
+          <h2 className="text-2xl font-bold text-orange-800 mb-4">
+            Experience
+          </h2>
           <div className="space-y-2">
             {cvData.experience.map((exp) => (
               <div key={exp.id} className="bg-white rounded-lg p-4">
@@ -157,7 +161,9 @@ function ModernTemplate({ cvData }: { cvData: CVData }) {
 
       {cvData.education.length > 0 && (
         <div className="bg-blue-50 rounded-lg p-4 mb-4">
-          <div className="w-24 h-5 bg-blue-600 rounded mb-3"></div>
+          <h2 className="text-2xl font-bold text-orange-800 mb-4">
+            Education
+          </h2>
           <div className="space-y-2">
             {cvData.education.map((edu) => (
               <div key={edu.id} className="bg-white rounded-lg p-4">
@@ -176,7 +182,9 @@ function ModernTemplate({ cvData }: { cvData: CVData }) {
 
       {cvData.projects.length > 0 && (
         <div className="bg-blue-50 rounded-lg p-4 mb-4">
-          <div className="w-24 h-5 bg-blue-600 rounded mb-3"></div>
+          <h2 className="text-2xl font-bold text-orange-800 mb-4">
+            Projects
+          </h2>
           <div className="space-y-2">
             {cvData.projects.map((proj) => (
               <div key={proj.id} className="bg-white rounded-lg p-4">
@@ -196,7 +204,9 @@ function ModernTemplate({ cvData }: { cvData: CVData }) {
 
       {cvData.skills.length > 0 && (
         <div className="bg-blue-50 rounded-lg p-4">
-          <div className="w-24 h-5 bg-blue-600 rounded mb-3"></div>
+          <h2 className="text-2xl font-bold text-orange-800 mb-4">
+            Skills
+          </h2>
           <div className="flex flex-wrap gap-2">
             {cvData.skills.map((skill, idx) => (
               <span key={idx} className="px-4 py-2 bg-blue-600 text-white rounded-full text-sm font-medium">
@@ -233,14 +243,14 @@ function MinimalTemplate({ cvData }: { cvData: CVData }) {
 
       {cvData.personalInfo.summary && (
         <div className="border-t border-gray-200 pt-8 mb-8">
-          <div className="w-20 h-4 bg-gray-400 mb-4"></div>
+          <h2 className="text-2xl font-bold text-orange-800 mb-4">Summary</h2>
           <p className="text-gray-700 leading-loose font-light">{cvData.personalInfo.summary}</p>
         </div>
       )}
 
       {cvData.experience.length > 0 && (
         <div className="border-t border-gray-200 pt-8 mb-8">
-          <div className="w-20 h-4 bg-gray-400 mb-4"></div>
+          <h2 className="text-2xl font-bold text-orange-800 mb-4">Experience</h2>
           <div className="space-y-3">
             {cvData.experience.map((exp) => (
               <div key={exp.id}>
@@ -255,7 +265,7 @@ function MinimalTemplate({ cvData }: { cvData: CVData }) {
 
       {cvData.education.length > 0 && (
         <div className="border-t border-gray-200 pt-8 mb-8">
-          <div className="w-20 h-4 bg-gray-400 mb-4"></div>
+          <h2 className="text-2xl font-bold text-orange-800 mb-4">Education</h2>
           <div className="space-y-3">
             {cvData.education.map((edu) => (
               <div key={edu.id}>
@@ -269,7 +279,7 @@ function MinimalTemplate({ cvData }: { cvData: CVData }) {
 
       {cvData.projects.length > 0 && (
         <div className="border-t border-gray-200 pt-8 mb-8">
-          <div className="w-20 h-4 bg-gray-400 mb-4"></div>
+          <h2 className="text-2xl font-bold text-orange-800 mb-4">Projects</h2>
           <div className="space-y-3">
             {cvData.projects.map((proj) => (
               <div key={proj.id}>
@@ -284,6 +294,7 @@ function MinimalTemplate({ cvData }: { cvData: CVData }) {
 
       {cvData.skills.length > 0 && (
         <div className="border-t border-gray-200 pt-8">
+          <h2 className="text-2xl font-bold text-orange-800 mb-4">Skills</h2>
           <p className="text-gray-700 font-light">{cvData.skills.join(" • ")}</p>
         </div>
       )}
@@ -321,7 +332,7 @@ function CorporateTemplate({ cvData }: { cvData: CVData }) {
           {cvData.personalInfo.summary && (
             <section>
               <h2 className="text-xl font-bold text-slate-800 border-b-3 border-slate-800 pb-2 mb-4 uppercase tracking-wide">
-                Professional Summary
+                Summary
               </h2>
               <p className="text-gray-700 leading-relaxed">{cvData.personalInfo.summary}</p>
             </section>
@@ -330,7 +341,7 @@ function CorporateTemplate({ cvData }: { cvData: CVData }) {
           {cvData.experience.length > 0 && (
             <section>
               <h2 className="text-xl font-bold text-slate-800 border-b-3 border-slate-800 pb-2 mb-4 uppercase tracking-wide">
-                Work Experience
+                Experience
               </h2>
               <div className="space-y-6">
                 {cvData.experience.map((exp) => (
@@ -350,7 +361,7 @@ function CorporateTemplate({ cvData }: { cvData: CVData }) {
           {cvData.projects.length > 0 && (
             <section>
               <h2 className="text-xl font-bold text-slate-800 border-b-3 border-slate-800 pb-2 mb-4 uppercase tracking-wide">
-                Key Projects
+                Projects
               </h2>
               <div className="space-y-4">
                 {cvData.projects.map((proj) => (
